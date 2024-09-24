@@ -1,0 +1,469 @@
+{
+    "optical": [
+        {
+            "id": 1,
+            "brand": "Ray-Ban",
+            "model": "RB3016",
+            "category": "men",
+            "price": 120.00,
+            "discount_price": 100.00,
+            "image_url": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0014WV17O1O154000000-1.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0014WV17O1O154000000-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Classic men's optical glasses with durable frames and clear lenses.",
+            "frame_material": "Metal",
+            "frame_shape": "Rectangular",
+            "face_frame_shape": "Oval",
+            "colors_available": [
+                "Black",
+                "Silver"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "25g",
+            "is_unisex": true
+        },
+        {
+            "id": 2,
+            "brand": "Gucci",
+            "model": "GG0241O",
+            "category": "women",
+            "price": 150.00,
+            "discount_percentage": 50,
+            "image_url": "https://eye-boutique.imgix.net/2023-12-20/4b1dbf1288d53e20e2daef356?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0015ZV07R1O153000000-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Elegant women's optical glasses with a stylish frame design.",
+            "frame_material": "Acetate",
+            "frame_shape": "Cat Eye",
+            "face_frame_shape": "Round",
+            "colors_available": [
+                "Red",
+                "Gold"
+            ],
+            "in_stock": true,
+            "try_on_available": false,
+            "weight": "22g",
+            "is_unisex": false
+        },
+        {
+            "id": 3,
+            "brand": "Tom Ford",
+            "model": "FT5505",
+            "category": "men",
+            "price": 200.00,
+            "discount_price": 150.00,
+            "image_url": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0014WV17O1O154000000-1.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0014WV17O1O154000000-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Sophisticated men's optical glasses with a modern frame.",
+            "frame_material": "Metal",
+            "frame_shape": "Round",
+            "face_frame_shape": "Square",
+            "colors_available": [
+                "Black",
+                "Gold"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "27g",
+            "is_unisex": false
+        },
+        {
+            "id": 4,
+            "brand": "Oakley",
+            "model": "OX8046",
+            "category": "unisex",
+            "price": 160.00,
+            "discount_percentage": 30,
+            "image_url": "https://eye-boutique.imgix.net/2023-12-20/4b1dbf1288d53e20e2daef356?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0015ZV07R1O153000000-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Durable unisex optical glasses with a sporty design.",
+            "frame_material": "Plastic",
+            "frame_shape": "Square",
+            "face_frame_shape": "Oval",
+            "colors_available": [
+                "Black",
+                "Blue"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "24g",
+            "is_unisex": true
+        },
+        {
+            "id": 5,
+            "brand": "Persol",
+            "model": "PO3105V",
+            "category": "men",
+            "price": 180.00,
+            "discount_price": 170.00,
+            "image_url": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0014WV17O1O154000000-1.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0014WV17O1O154000000-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Classic men's optical glasses with a vintage look.",
+            "frame_material": "Acetate",
+            "frame_shape": "Round",
+            "face_frame_shape": "Heart",
+            "colors_available": [
+                "Black",
+                "Tortoise"
+            ],
+            "in_stock": true,
+            "try_on_available": false,
+            "weight": "28g",
+            "is_unisex": false
+        },
+        {
+            "id": 6,
+            "brand": "Gucci",
+            "model": "GG0061O",
+            "category": "women",
+            "price": 220.00,
+            "image_url": "https://eye-boutique.imgix.net/2023-12-20/4b1dbf1288d53e20e2daef356?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0015ZV07R1O153000000-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Luxury women's optical glasses with a bold frame design.",
+            "frame_material": "Acetate",
+            "frame_shape": "Square",
+            "face_frame_shape": "Oval",
+            "colors_available": [
+                "Black",
+                "Red"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "26g",
+            "is_unisex": false
+        },
+        {
+            "id": 7,
+            "brand": "Ray-Ban",
+            "model": "RB5286",
+            "category": "men",
+            "price": 130.00,
+            "discount_price": 110.00,
+            "image_url": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0014WV17O1O154000000-1.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0014WV17O1O154000000-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Stylish men's optical glasses with a modern design.",
+            "frame_material": "Metal",
+            "frame_shape": "Rectangular",
+            "face_frame_shape": "Square",
+            "colors_available": [
+                "Black",
+                "Silver"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "24g",
+            "is_unisex": true
+        },
+        {
+            "id": 8,
+            "brand": "Prada",
+            "model": "PR16MV",
+            "category": "women",
+            "price": 240.00,
+            "image_url": "https://eye-boutique.imgix.net/2023-12-20/4b1dbf1288d53e20e2daef356?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-03-10/FRPRD0015ZV07R1O153000000-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Elegant women's optical glasses with a luxurious frame design.",
+            "frame_material": "Metal",
+            "frame_shape": "Cat Eye",
+            "face_frame_shape": "Round",
+            "colors_available": [
+                "Gold",
+                "Black"
+            ],
+            "in_stock": true,
+            "try_on_available": false,
+            "weight": "22g",
+            "is_unisex": false
+        }
+    ],
+    "sunglasses": [
+        {
+            "id": 9,
+            "brand": "Ray-Ban",
+            "model": "RB2132",
+            "category": "men",
+            "price": 140.00,
+            "discount_price": 100.00,
+            "image_url": "https://eye-boutique.imgix.net/2023-12-20/SGVYS00NOAH0000N500000050-1.png?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2023-12-20/SGVYS00NOAH0000N500000050-2.png?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Classic men's sunglasses with UV protection and polarized lenses.",
+            "frame_material": "Plastic",
+            "frame_shape": "Wayfarer",
+            "face_frame_shape": "Round",
+            "colors_available": [
+                "Black",
+                "Tortoise"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "30g",
+            "is_unisex": true
+        },
+        {
+            "id": 10,
+            "brand": "Prada",
+            "model": "PR01OS",
+            "category": "women",
+            "price": 220.00,
+            "discount_price": 200.00,
+            "image_url": "https://eye-boutique.imgix.net/2024-02-28/SGSNL00066200000100000057-1.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-02-28/SGSNL00066200000100000057-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Luxury women's sunglasses with a sophisticated frame and gradient lenses.",
+            "frame_material": "Metal",
+            "frame_shape": "Aviator",
+            "face_frame_shape": "Heart",
+            "colors_available": [
+                "Gold",
+                "Brown"
+            ],
+            "in_stock": false,
+            "try_on_available": false,
+            "weight": "28g",
+            "is_unisex": false
+        },
+        {
+            "id": 11,
+            "brand": "Versace",
+            "model": "VE2150Q",
+            "category": "men",
+            "price": 260.00,
+            "image_url": "https://eye-boutique.imgix.net/2023-12-20/SGVYS00NOAH0000N500000050-1.png?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2023-12-20/SGVYS00NOAH0000N500000050-2.png?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "High-end men's sunglasses with a bold and stylish design.",
+            "frame_material": "Metal",
+            "frame_shape": "Square",
+            "face_frame_shape": "Oval",
+            "colors_available": [
+                "Gold",
+                "Black"
+            ],
+            "in_stock": true,
+            "try_on_available": false,
+            "weight": "26g",
+            "is_unisex": false
+        },
+        {
+            "id": 12,
+            "brand": "Gucci",
+            "model": "GG0061S",
+            "category": "women",
+            "price": 280.00,
+            "discount_price": 250.00,
+            "image_url": "https://eye-boutique.imgix.net/2024-02-28/SGSNL00066200000100000057-1.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-02-28/SGSNL00066200000100000057-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Elegant women's sunglasses with luxurious frame design.",
+            "frame_material": "Acetate",
+            "frame_shape": "Cat Eye",
+            "face_frame_shape": "Square",
+            "colors_available": [
+                "Black",
+                "Red"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "29g",
+            "is_unisex": false
+        },
+        {
+            "id": 13,
+            "brand": "Oakley",
+            "model": "OO9208",
+            "category": "men",
+            "price": 180.00,
+            "image_url": "https://eye-boutique.imgix.net/2023-12-20/SGVYS00NOAH0000N500000050-1.png?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2023-12-20/SGVYS00NOAH0000N500000050-2.png?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Sporty men's sunglasses with UV protection and interchangeable lenses.",
+            "frame_material": "Plastic",
+            "frame_shape": "Wraparound",
+            "face_frame_shape": "Square",
+            "colors_available": [
+                "Black",
+                "Blue"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "31g",
+            "is_unisex": true
+        },
+        {
+            "id": 14,
+            "brand": "Tom Ford",
+            "model": "FT0454",
+            "category": "women",
+            "price": 350.00,
+            "discount_percentage": 25,
+            "image_url": "https://eye-boutique.imgix.net/2024-02-28/SGSNL00066200000100000057-1.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-02-28/SGSNL00066200000100000057-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Designer women's sunglasses with a sleek and modern frame design.",
+            "frame_material": "Metal",
+            "frame_shape": "Round",
+            "face_frame_shape": "Oval",
+            "colors_available": [
+                "Black",
+                "Gold"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "27g",
+            "is_unisex": false
+        },
+        {
+            "id": 15,
+            "brand": "Ray-Ban",
+            "model": "RB3025",
+            "category": "unisex",
+            "price": 150.00,
+            "discount_price": 130.00,
+            "image_url": "https://eye-boutique.imgix.net/2023-12-20/SGVYS00NOAH0000N500000050-1.png?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2023-12-20/SGVYS00NOAH0000N500000050-2.png?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Classic unisex aviator sunglasses with polarized lenses.",
+            "frame_material": "Metal",
+            "frame_shape": "Aviator",
+            "face_frame_shape": "Heart",
+            "colors_available": [
+                "Silver",
+                "Gold"
+            ],
+            "in_stock": true,
+            "try_on_available": false,
+            "weight": "25g",
+            "is_unisex": true
+        },
+        {
+            "id": 16,
+            "brand": "Persol",
+            "model": "PO0649",
+            "category": "men",
+            "price": 280.00,
+            "discount_percentage": 50,
+            "image_url": "https://eye-boutique.imgix.net/2024-02-28/SGSNL00066200000100000057-1.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "image_url2": "https://eye-boutique.imgix.net/2024-02-28/SGSNL00066200000100000057-2.jpg?auto=format&ixlib=react-9.8.0&w=2619",
+            "description": "Timeless men's sunglasses with a vintage-inspired frame design.",
+            "frame_material": "Acetate",
+            "frame_shape": "Square",
+            "face_frame_shape": "Round",
+            "colors_available": [
+                "Tortoise",
+                "Black"
+            ],
+            "in_stock": true,
+            "try_on_available": true,
+            "weight": "30g",
+            "is_unisex": false
+        }
+    ],
+    "contact_lens": [
+        {
+            "id": 17,
+            "brand": "Acuvue",
+            "model": "Oasys",
+            "category": "daily",
+            "price": 30.00,
+            "image_url": "https://example.com/images/contactlens1.jpg",
+            "description": "Daily contact lenses with exceptional comfort and moisture.",
+            "material": "Hydrogel",
+            "base_curve": "8.4mm",
+            "diameter": "14.2mm",
+            "colors_available": [
+                "Clear"
+            ],
+            "in_stock": true,
+            "wear_duration": "Daily",
+            "quantity_per_box": 30
+        },
+        {
+            "id": 18,
+            "brand": "Bausch + Lomb",
+            "model": "Ultra",
+            "category": "monthly",
+            "price": 60.00,
+            "discount_price": 50.00,
+            "image_url": "https://example.com/images/contactlens2.jpg",
+            "description": "Monthly contact lenses with advanced moisture and oxygen permeability.",
+            "material": "Silicone Hydrogel",
+            "base_curve": "8.6mm",
+            "diameter": "14.5mm",
+            "colors_available": [
+                "Clear"
+            ],
+            "in_stock": true,
+            "wear_duration": "Monthly",
+            "quantity_per_box": 6
+        },
+        {
+            "id": 19,
+            "brand": "Air Optix",
+            "model": "Night & Day Aqua",
+            "category": "extended wear",
+            "price": 70.00,
+            "image_url": "https://example.com/images/contactlens3.jpg",
+            "description": "Extended wear contact lenses with high oxygen transmission for overnight use.",
+            "material": "Silicone Hydrogel",
+            "base_curve": "8.4mm",
+            "diameter": "13.8mm",
+            "colors_available": [
+                "Clear"
+            ],
+            "in_stock": true,
+            "wear_duration": "Up to 30 days",
+            "quantity_per_box": 6
+        },
+        {
+            "id": 20,
+            "brand": "Dailies",
+            "model": "Total1",
+            "category": "daily",
+            "price": 40.00,
+            "image_url": "https://example.com/images/contactlens4.jpg",
+            "description": "Premium daily contact lenses with water gradient technology for all-day comfort.",
+            "material": "Hydrogel",
+            "base_curve": "8.5mm",
+            "diameter": "14.1mm",
+            "colors_available": [
+                "Clear"
+            ],
+            "in_stock": true,
+            "wear_duration": "Daily",
+            "quantity_per_box": 30
+        },
+        {
+            "id": 21,
+            "brand": "Biofinity",
+            "model": "Toric",
+            "category": "monthly",
+            "price": 50.00,
+            "discount_price": 45.00,
+            "image_url": "https://example.com/images/contactlens5.jpg",
+            "description": "Monthly contact lenses for astigmatism with optimized lens design.",
+            "material": "Silicone Hydrogel",
+            "base_curve": "8.7mm",
+            "diameter": "14.5mm",
+            "colors_available": [
+                "Clear"
+            ],
+            "in_stock": true,
+            "wear_duration": "Monthly",
+            "quantity_per_box": 6
+        },
+        {
+            "id": 22,
+            "brand": "FreshLook",
+            "model": "Colorblends",
+            "category": "colored",
+            "price": 35.00,
+            "image_url": "https://example.com/images/contactlens6.jpg",
+            "description": "Colored contact lenses with a natural look and a variety of color options.",
+            "material": "Hydrogel",
+            "base_curve": "8.6mm",
+            "diameter": "14.2mm",
+            "colors_available": [
+                "Blue",
+                "Green",
+                "Gray",
+                "Honey"
+            ],
+            "in_stock": true,
+            "wear_duration": "Daily or Monthly",
+            "quantity_per_box": 2
+        }
+    ]
+}
