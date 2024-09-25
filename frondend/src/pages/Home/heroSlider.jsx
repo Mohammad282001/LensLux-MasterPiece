@@ -19,7 +19,7 @@ const slides = [
         link: "/eyeExam"
     },
     {
-        video: "https://www.youtube.com/embed/qFLCx8naQqE?autoplay=1&loop=1&playlist=qFLCx8naQqE&mute=1",
+        // video: "https://www.youtube.com/embed/qFLCx8naQqE?autoplay=1&loop=1&playlist=qFLCx8naQqE&mute=1",
         title: "Frame Finder",
         description: "Find your perfect frame upon your face shape",
         ctaText: "Find A Frame",

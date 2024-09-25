@@ -5,6 +5,8 @@ import CategoryPage from './pages/Categories/categoryPage';
 import ProductPage from './pages/Product/productPage';
 import CategoryListPage from './pages/Categories/categoryListPage';
 import GlassesShopAuth from './pages/auth/test';
+import LoginPage from './pages/auth/LoginPage'; 
+import SignUpPage from './pages/auth/SignUpPage';
 import './App.css';
 import './index.css';
 
@@ -13,6 +15,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route path="/category" element={<CategoryListPage />} />
         <Route path="/glasses/:type" element={<CategoryPage />} />
         <Route path="/glasses/:type/:category" element={<CategoryPage />} />

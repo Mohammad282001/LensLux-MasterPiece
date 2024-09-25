@@ -1,7 +1,7 @@
 // src/pages/HomePage.js
 import React from 'react';
 
-import Navbar from '../../layouts/navbar';
+import Navbar from '../../layouts/navbar/Navbar';
 import HeroSlider from "./heroSlider"
 import ImageCard from './categorySection';
 import ProductSlider from "../../components/Cards/productsSlider"

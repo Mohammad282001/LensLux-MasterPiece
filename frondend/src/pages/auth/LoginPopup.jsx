@@ -1,27 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModals, setUser } from '../../redux/authSlice';
+import { closeModals, loginUser } from '../../redux/authSlice';
 import PopupComponent from './PopupComponent';
 import InputField from './InputField';
 
 const LoginPopup = () => {
     const dispatch = useDispatch();
     const isOpen = useSelector((state) => state.auth.isLoginOpen);
+    const { user, error, loading } = useSelector((state) => state.auth); // Accessing user, error, loading states
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
-        // Here you would typically call an API to authenticate the user
-        console.log('Login submitted', { email, password });
-        dispatch(setUser({ email })); // Set user in Redux state
-        dispatch(closeModals());
+        dispatch(loginUser({ email, password }));
     };
 
+    // Close the popup when login is successful (user is defined)
+    useEffect(() => {
+        console.log("User in useEffect:", localStorage.getItem('token')); // Log user data
+        if (localStorage.getItem('token')) {
+            console.log("Login successful, closing modal");
+            dispatch(closeModals());
+        }
+    }, [user, dispatch]);
     return (
         <PopupComponent isOpen={isOpen} onClose={() => dispatch(closeModals())}>
             <h2 className="text-3xl font-bold text-gray-800 mb-6">Welcome Back</h2>
-            <form onSubmit={handleSubmit}>
+
+            {/* Display error if login fails */}
+            {error && <p className="text-red-600 text-center mb-4">{error}</p>}
+
+            <form onSubmit={handleLogin}>
                 <InputField
                     label="Email"
                     type="email"
@@ -38,13 +48,18 @@ const LoginPopup = () => {
                 />
                 <button
                     type="submit"
-                    className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-300 shadow-lg"
+                    className={`w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-300 shadow-lg ${loading ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                    disabled={loading}
                 >
-                    Login
+                    {loading ? 'Logging in...' : 'Login'}
                 </button>
             </form>
             <p className="text-center text-gray-600 mt-4">
-                Don't have an account? <span className="text-purple-600 cursor-pointer hover:underline">Sign up</span>
+                Don't have an account?{' '}
+                <span className="text-orange-600 cursor-pointer hover:underline">
+                    Sign up
+                </span>
             </p>
         </PopupComponent>
     );

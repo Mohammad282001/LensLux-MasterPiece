@@ -12,13 +12,11 @@ exports.protect = async (req, res, next) => {
     try {
         // Verify the token
         const decoded = verifyToken(token);
-
         // Find the user by ID
         const user = await User.findByPk(decoded.id);
         if (!user) {
             return res.status(401).json({ message: 'User does not exist' });
         }
-
         req.user = user; // Pass user information to the next middleware
 
         next();

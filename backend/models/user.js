@@ -2,31 +2,57 @@
 const {
   Model
 } = require('sequelize');
-const bcrypt = require('bcryptjs'); // Ensure bcrypt is imported here
+const bcrypt = require('bcryptjs');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      // define associations here if needed
     }
   }
+
   User.init({
-    email: DataTypes.STRING,
-    password_hash: DataTypes.STRING,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    phone_number: DataTypes.STRING,
-    role: DataTypes.STRING,
-    face_shape: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true, // Ensure unique email
+      validate: {
+        isEmail: true, // Ensure valid email format
+      },
+    },
+    password_hash: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    phone_number: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'user', // Default user role
+    },
+    face_shape: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     soft_deleted: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    date_of_birth: DataTypes.DATE,
+    date_of_birth: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'User',
@@ -43,5 +69,6 @@ module.exports = (sequelize, DataTypes) => {
       },
     }
   });
+
   return User;
 };

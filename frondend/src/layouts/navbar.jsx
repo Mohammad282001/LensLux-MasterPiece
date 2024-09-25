@@ -1,5 +1,4 @@
 'use client'
-
 import { Fragment, useState } from 'react'
 import {
     Dialog,
@@ -16,15 +15,14 @@ import {
     TabPanels,
 } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import logo from "../assets/images/logo.png"
+
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { openLogin, openSignUp } from '../redux/authSlice';
 import LoginPopup from '../pages/auth/LoginPopup';
 import SignUpPopup from '../pages/auth/SignUpPopup';
-
+import logo from "../assets/images/logo.png"
 import optical_cover from "../assets/images/optical_cover.jpg"
-
 const navigation = {
     categories: [
         {
@@ -144,12 +142,10 @@ const navigation = {
 
     ],
 }
-
 export default function Navbar() {
     const [open, setOpen] = useState(false)
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
-
     return (
         <>
             {/* Mobile menu */}
@@ -272,7 +268,6 @@ export default function Navbar() {
                     </DialogPanel>
                 </div>
             </Dialog>
-
             <header className="relative bg-white">
                 <div className="hidden lg:flex h-10 bg-black px-4 text-sm font-medium text-white lg:px-8">
                     <div className="hidden lg:ml-8 lg:flex">
@@ -301,26 +296,15 @@ export default function Navbar() {
                             Create account
                         </button>
                         <SignUpPopup />
-
                     </div>
-
-
                 </div>
-
-
                 <p className="flex h-10 items-center justify-center bg-red-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
                     Get free delivery on orders over 100.0 JOD
                 </p>
-
-
-
-
                 <nav
-
                     id="navbar"
                     aria-label="Top"
                     className="sticky top-0 z-10 w-full bg-white mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-
                 >
                     <div className=" border-b border-gray-200">
                         <div className="flex h-16 items-center">
@@ -333,7 +317,6 @@ export default function Navbar() {
                                 <span className="sr-only">Open menu</span>
                                 <Bars3Icon aria-hidden="true" className="h-6 w-6" />
                             </button>
-
                             {/* Logo */}
                             <div className="ml-4 flex lg:ml-0">
                                 <Link to="/">
@@ -345,7 +328,6 @@ export default function Navbar() {
                                     />
                                 </Link>
                             </div>
-
                             {/* Flyout menus */}
                             <PopoverGroup className="hidden z-10 lg:ml-8 lg:block lg:self-stretch">
                                 <div className="flex h-full space-x-8">
@@ -356,7 +338,6 @@ export default function Navbar() {
                                                     {category.name}
                                                 </PopoverButton>
                                             </div>
-
                                             <PopoverPanel
                                                 transition
                                                 className="absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
@@ -415,7 +396,6 @@ export default function Navbar() {
                                             </PopoverPanel>
                                         </Popover>
                                     ))}
-
                                     {navigation.pages.map((page) => (
                                         <Link
                                             key={page.name}
@@ -427,10 +407,7 @@ export default function Navbar() {
                                     ))}
                                 </div>
                             </PopoverGroup>
-
                             <div className="ml-auto flex items-center">
-
-
                                 {/* Search */}
                                 <div className="flex lg:ml-6">
                                     <Link to="#" className="p-2 text-gray-400 hover:text-gray-500">
@@ -438,7 +415,6 @@ export default function Navbar() {
                                         <MagnifyingGlassIcon aria-hidden="true" className="h-6 w-6" />
                                     </Link>
                                 </div>
-
                                 {/* Cart */}
                                 <div className="ml-4 flow-root lg:ml-6">
                                     <Link to="#" className="group -m-2 flex items-center p-2">
@@ -458,12 +434,3 @@ export default function Navbar() {
         </>
     )
 }
-
-
-
-
-
-
-
-
-
