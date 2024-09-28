@@ -1,6 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
+const brandRoute = require('./routes/brandsRoutes');
+const lensesRoute = require('./routes/lensesRouter');
+const glassesRouter = require("./routes/glassesRouter");
 const cors = require('cors');
 dotenv.config();
 
@@ -19,7 +22,10 @@ app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
-app.use('/', userRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/brand', brandRoute);
+app.use('/api/lenses', lensesRoute);
+app.use('/api/glasses', glassesRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

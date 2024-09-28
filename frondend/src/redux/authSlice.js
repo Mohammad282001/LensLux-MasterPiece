@@ -6,6 +6,7 @@ const initialState = {
     isSignUpOpen: false,
     user: null,
     token: null,
+    role: "user",
     loading: false,
     error: null,
 };
@@ -14,7 +15,7 @@ export const loginUser = createAsyncThunk(
     'auth/loginUser',
     async (userData, thunkAPI) => {
         try {
-            const response = await axios.post("http://localhost:3000/login", userData, { withCredentials: true });
+            const response = await axios.post("http://localhost:3000/api/users/login", userData, { withCredentials: true });
             localStorage.setItem('token', response.data.token);
             console.log(response.data)
             return response.data;
@@ -28,7 +29,7 @@ export const signupUser = createAsyncThunk(
     'auth/signupUser',
     async (userData, thunkAPI) => {
         try {
-            const response = await axios.post('http://localhost:3000/signup', userData, { withCredentials: true });
+            const response = await axios.post('http://localhost:3000/api/users/signup', userData, { withCredentials: true });
             localStorage.setItem('token', response.data.token);
             return response.data;
         } catch (error) {
