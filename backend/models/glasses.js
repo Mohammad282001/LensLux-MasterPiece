@@ -4,8 +4,23 @@ module.exports = (sequelize, DataTypes) => {
   class Glasses extends Model {
     static associate(models) {
       // define association here
+      Glasses.hasOne(models.Products, {
+        foreignKey: 'product_id',
+        as: 'product',
+        constraints: false,
+        scope: {
+          product_type: 'Glasses'
+        }
+      });
       Glasses.belongsTo(models.Brands, { foreignKey: 'brand_id', as: 'brand' });
       Glasses.hasMany(models.Glasses_images, { foreignKey: 'glasses_id', as: 'images' });
+      // Glasses.hasOne(models.GlassesDetails, { foreignKey: 'detail_id', as: 'details' });
+      Glasses.hasMany(models.Glasses_details, {
+        foreignKey: 'glasses_id',
+        as: 'details',
+        onDelete: 'SET NULL', // Adjust this based on your business logic
+        onUpdate: 'CASCADE'
+      });
 
     }
   }
@@ -13,8 +28,10 @@ module.exports = (sequelize, DataTypes) => {
   Glasses.init({
     glasses_id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
+      allowNull: false,
+      defaultValue: sequelize.literal("nextval('shared_id_sequence')")
+
     },
     brand_id: {
       type: DataTypes.INTEGER,
@@ -93,6 +110,14 @@ module.exports = (sequelize, DataTypes) => {
     face_frame_shape: {
       type: DataTypes.STRING(100),
       allowNull: false,
+    },
+    color_name: {
+      type: DataTypes.STRING(50),
+      allowNull: false, // Set to false
+    },
+    color_hex: {
+      type: DataTypes.STRING(7), // Hex code format (#RRGGBB)
+      allowNull: false, // Set to false
     },
   }, {
     sequelize,

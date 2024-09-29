@@ -1,4 +1,4 @@
-    const { Lenses, Brands, Lenses_images } = require('../models');
+const { Lenses, Brands, Lenses_images, Products } = require('../models');
 
 const lensesController = {
     //create new lenses
@@ -18,6 +18,11 @@ const lensesController = {
                 discount_price,
                 discount_percentage,
                 quantity,
+            });
+
+            await Products.create({
+                product_id: lens.id, // Associate the new lenses with the product
+                product_type: 'Lenses'    // Specify the type as 'Lenses'
             });
             res.status(201).json(lens);
         } catch (error) {

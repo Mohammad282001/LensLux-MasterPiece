@@ -4,6 +4,7 @@ const userRoutes = require('./routes/userRoutes');
 const brandRoute = require('./routes/brandsRoutes');
 const lensesRoute = require('./routes/lensesRouter');
 const glassesRouter = require("./routes/glassesRouter");
+const glassesDetailsRouter = require("./routes/glassesDetailsController")
 const cors = require('cors');
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/brand', brandRoute);
 app.use('/api/lenses', lensesRoute);
 app.use('/api/glasses', glassesRouter);
+app.use('/api/glasses-details', glassesDetailsRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

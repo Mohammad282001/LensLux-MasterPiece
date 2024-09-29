@@ -1,4 +1,4 @@
-const { Glasses, Brands, Glasses_images } = require('../models');
+const { Glasses, Brands, Glasses_images, Glasses_details, Products } = require('../models');
 
 const glassesController = {
     addNewGlasses: async (req, res) => {
@@ -17,7 +17,9 @@ const glassesController = {
                 has_virtual_try_on,
                 virtual_try_on_data,
                 frame_shape,
-                face_frame_shape
+                face_frame_shape,
+                color_name,
+                color_hex,
             } = req.body;
 
             // Check if the brand_id exists
@@ -61,7 +63,14 @@ const glassesController = {
                 has_virtual_try_on,
                 virtual_try_on_data,
                 frame_shape,
-                face_frame_shape
+                face_frame_shape,
+                color_name,
+                color_hex
+            });
+
+            await Products.create({
+                product_id: frame.glasses_id, // Associate the new glasses with the product
+                product_type: 'Glasses'           // Specify the type as 'Glasses'
             });
 
             res.status(201).json(frame);
@@ -86,6 +95,11 @@ const glassesController = {
                         model: Glasses_images,
                         as: 'images',
                         attributes: ['image_url', 'image_type']
+                    },
+                    {
+                        model: Glasses_details,
+                        as: 'details',
+                        attributes: ['lens_width', 'bridge_width', "temple_length", "lens_height", "total_width", "weight", "frame_material","lens_type"]
                     }
                 ]
             });
@@ -109,6 +123,11 @@ const glassesController = {
                         model: Glasses_images,
                         as: 'images',
                         attributes: ['image_url', 'image_type']
+                    },
+                    {
+                        model: Glasses_details,
+                        as: 'details',
+                        attributes: ['lens_width', 'bridge_width', "temple_length", "lens_height", "total_width", "weight", "frame_material", "lens_type"]
                     }
                 ]
             });
@@ -138,7 +157,9 @@ const glassesController = {
                 has_virtual_try_on,
                 virtual_try_on_data,
                 frame_shape,
-                face_frame_shape
+                face_frame_shape,
+                color_name,
+                color_hex
             } = req.body;
 
             const glasses = await Glasses.findByPk(id);
@@ -187,7 +208,9 @@ const glassesController = {
                 has_virtual_try_on,
                 virtual_try_on_data,
                 frame_shape,
-                face_frame_shape
+                face_frame_shape,
+                color_name,
+                color_hex
             });
 
             res.status(200).json(glasses);
@@ -285,17 +308,22 @@ const glassesController = {
     // Delete an image by image_id
     deleteImage: async (req, res) => {
         try {
-            const { id } = req.body;
-            const deleted = await Glasses_images.destroy({
-                where: { id },
-            });
-            if (deleted) {
-                res.status(204).json({ message: "Image deleted successfully" });
-            } else {
-                res.status(404).json({ message: "Image not found" });
+            const { id } = req.params;
+
+            const glasses = await Glasses.findByPk(id);
+            if (!glasses) {
+                return res.status(404).json({ error: 'Glasses not found' });
             }
+
+            // Delete related Glasses_details records first
+            await Glasses_details.destroy({ where: { glasses_id: id } });
+
+            // Now delete the glasses
+            await glasses.destroy();
+
+            res.status(200).json({ message: 'Glasses deleted successfully' });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: 'Failed to delete glasses', details: error.message });
         }
     },
 };

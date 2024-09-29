@@ -6,7 +6,7 @@ router.post("/add", glassesController.addNewGlasses);
 router.get("/getAll", glassesController.getAllGlasses);
 router.get("/get/:id", glassesController.getGlassesById);
 router.put("/:id", glassesController.updateGlasses);
-router.delete("/:id", glassesController.deleteGlasses);
+router.delete("/delete/:id", glassesController.deleteGlasses);
 
 //images
 router.get('/images/:glasses_id', glassesController.getImagesByGlassesId);

@@ -9,6 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Lenses.hasOne(models.Products, {
+        foreignKey: 'product_id',
+        as: 'product',
+        constraints: false,
+        scope: {
+          product_type: 'Lenses'
+        }
+      });
+
       // Lenses belongs to Brand
       Lenses.belongsTo(models.Brands, { foreignKey: 'brand_id', as: 'brand' });
       Lenses.hasMany(models.Lenses_images, { foreignKey: 'lenses_id', as: 'images' });
@@ -16,7 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Lenses.init({
-
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      defaultValue: sequelize.literal("nextval('shared_id_sequence')")
+    },
     lens_type: {
       type: DataTypes.STRING,
       allowNull: false,
