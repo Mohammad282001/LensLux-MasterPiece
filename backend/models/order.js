@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // Define association between Order and User
+      Order.hasMany(models.OrderItem, { foreignKey: 'order_id', as: 'items' });
       Order.belongsTo(models.User, {
         foreignKey: 'user_id',
         as: 'user',
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     shipping_address: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,

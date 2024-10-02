@@ -7,8 +7,9 @@ router.get("/getAll", glassesController.getAllGlasses);
 router.get("/get/:id", glassesController.getGlassesById);
 router.put("/:id", glassesController.updateGlasses);
 router.delete("/delete/:id", glassesController.deleteGlasses);
+// router.get("?category=:category&targetAudience=:targetAudience", glassesController.getGlassesFilter)
 
-//images
+router.get("/filter", glassesController.getGlassesFilter); // Route for glasses with query params//images
 router.get('/images/:glasses_id', glassesController.getImagesByGlassesId);
 router.post('/images', glassesController.createImage);
 router.put('/images/update', glassesController.updateImage);

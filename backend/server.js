@@ -5,6 +5,9 @@ const brandRoute = require('./routes/brandsRoutes');
 const lensesRoute = require('./routes/lensesRouter');
 const glassesRouter = require("./routes/glassesRouter");
 const glassesDetailsRouter = require("./routes/glassesDetailsController")
+const orderItemController = require("./routes/orderItemRoutes");
+const orderController = require("./routes/orderRoutes");
+
 const cors = require('cors');
 dotenv.config();
 
@@ -28,6 +31,9 @@ app.use('/api/brand', brandRoute);
 app.use('/api/lenses', lensesRoute);
 app.use('/api/glasses', glassesRouter);
 app.use('/api/glasses-details', glassesDetailsRouter);
+app.use('/api/orders', orderController)
+app.use('/api/cart', orderItemController)
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

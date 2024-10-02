@@ -109,6 +109,38 @@ const glassesController = {
         }
     },
 
+    getGlassesFilter: async (req, res) => {
+        const { category, targetAudience } = req.query; // Use req.query for query parameters
+        try {
+            const glasses = await Glasses.findAll({
+                where: {
+                    category: category,
+                    target_audience: targetAudience // Ensure correct property names
+                },
+                include: [
+                    {
+                        model: Brands,
+                        as: 'brand',
+                        attributes: ['brand_name', 'brand_image']
+                    },
+                    {
+                        model: Glasses_images,
+                        as: 'images',
+                        attributes: ['image_url', 'image_type']
+                    },
+                    {
+                        model: Glasses_details,
+                        as: 'details',
+                        attributes: ['lens_width', 'bridge_width', 'temple_length', 'lens_height', 'total_width', 'weight', 'frame_material', 'lens_type']
+                    }
+                ]
+            });
+            res.status(200).json(glasses);
+        } catch (error) {
+            res.status(500).json({ message: "Server error", error: error.message });
+        }
+    },
+
     getGlassesById: async (req, res) => {
         try {
             const { id } = req.params;
@@ -224,12 +256,18 @@ const glassesController = {
             const { id } = req.params;
 
             const glasses = await Glasses.findByPk(id);
+            const glassesFromProducts = await Products.findByPk(id);
             if (!glasses) {
                 return res.status(404).json({ error: 'Glasses not found' });
+            }
+            if (!glassesFromProducts) {
+                return res.status(404).json({ error: 'Glasses not found in products' });
             }
 
             // Delete the glasses
             await glasses.destroy();
+            await glassesFromProducts.destroy();
+            
 
             res.status(200).json({ message: 'Glasses deleted successfully' });
         } catch (error) {

@@ -18,6 +18,8 @@ module.exports = (sequelize, DataTypes) => {
           product_type: 'Lenses'
         }
       });
+      Products.hasMany(models.OrderItem, { foreignKey: 'product_id', as: 'order_items' });
+
     }
   }
   Products.init({

@@ -33,7 +33,7 @@ module.exports = {
       },
       shipping_address: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

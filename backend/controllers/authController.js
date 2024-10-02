@@ -26,7 +26,6 @@ const userController = {
             });
 
             const token = signToken(newUser.id);
-
             res.status(201).json({
                 status: 'success',
                 token,
