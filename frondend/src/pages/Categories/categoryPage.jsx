@@ -1,8 +1,7 @@
 import React from 'react';
-import Navbar from '../../layouts/navbar';
+import Navbar from '../../layouts/navbar/Navbar';
 import FetchingData from './fetchingData';
 import Footer from '../../layouts/footer';
-import HeroCover from './herosection';
 
 const CategoryPage = () => {
     return (

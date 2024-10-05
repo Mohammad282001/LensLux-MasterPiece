@@ -12,14 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Brands.hasMany(models.Glasses, { foreignKey: 'brand_id' }); // Associating Brands with Glasses
       Brands.hasMany(models.Lenses, { foreignKey: 'brand_id' }); // Associating Brands with Glasses
-
-
-      // define association here
     }
   }
   Brands.init({
     brand_name: DataTypes.STRING,
-    brand_image: DataTypes.STRING
+    brand_image: DataTypes.STRING,
+    brand_for: DataTypes.STRING, 
+
   }, {
     sequelize,
     modelName: 'Brands',

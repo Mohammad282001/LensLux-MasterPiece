@@ -1,8 +1,14 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
-import { Link } from 'react-router-dom';
-import NavbarLink from './NavbarLink';
+import { Link, useNavigate } from 'react-router-dom';
 
-const CategoryPopover = ({ category }) => {
+const CategoryPopover = ({ category, setOpen }) => {
+    const navigate = useNavigate();
+
+    const handleLinkClick = (to) => {
+        navigate(to);  // Navigate to the desired route
+        setOpen(false);  // Close the navbar or popover
+    };
+
     return (
         <Popover className="flex">
             <div className="relative flex">
@@ -24,10 +30,12 @@ const CategoryPopover = ({ category }) => {
                                         <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                                             <img alt={item.imageAlt} src={item.imageSrc} className="object-cover object-center" />
                                         </div>
-                                        <Link to={item.to} className="mt-6 block font-medium text-gray-900">
-                                            <span aria-hidden="true" className="absolute inset-0 z-10" />
+                                        <button
+                                            onClick={() => handleLinkClick(item.to)}  // Call handleLinkClick
+                                            className="mt-6 block font-medium text-gray-900"
+                                        >
                                             {item.name}
-                                        </Link>
+                                        </button>
                                         <p aria-hidden="true" className="mt-1">
                                             Shop now
                                         </p>
@@ -47,7 +55,12 @@ const CategoryPopover = ({ category }) => {
                                         >
                                             {section.items.map((item) => (
                                                 <li key={item.name} className="flex">
-                                                    <NavbarLink to={item.to} name={item.name} />
+                                                    <button
+                                                        onClick={() => handleLinkClick(item.to)}  // Handle link click
+                                                        className="hover:text-gray-800"
+                                                    >
+                                                        {item.name}
+                                                    </button>
                                                 </li>
                                             ))}
                                         </ul>

@@ -10,9 +10,9 @@ const glassesController = {
                 price,
                 discount_price,
                 discount_percentage,
-                target_audience,
                 category,
-                sub_category,
+                type,
+                sub_type,
                 stock_quantity,
                 has_virtual_try_on,
                 virtual_try_on_data,
@@ -31,21 +31,21 @@ const glassesController = {
                 });
             }
 
-            // Validate target_audience
+            // Validate category
             const validAudiences = ['men', 'women', 'unisex', 'kids'];
-            if (!validAudiences.includes(target_audience)) {
+            if (!validAudiences.includes(category)) {
                 return res.status(400).json({
                     error: 'Invalid target audience',
                     details: `Target audience must be one of: ${validAudiences.join(', ')}`
                 });
             }
 
-            // Validate category
+            // Validate type
             const validCategories = ['eyeglasses', 'sunglasses'];
-            if (!validCategories.includes(category)) {
+            if (!validCategories.includes(type)) {
                 return res.status(400).json({
-                    error: 'Invalid category',
-                    details: `Category must be one of: ${validCategories.join(', ')}`
+                    error: 'Invalid type',
+                    details: `type must be one of: ${validCategories.join(', ')}`
                 });
             }
 
@@ -56,9 +56,9 @@ const glassesController = {
                 price,
                 discount_price,
                 discount_percentage,
-                target_audience,
                 category,
-                sub_category,
+                type,
+                sub_type,
                 stock_quantity,
                 has_virtual_try_on,
                 virtual_try_on_data,
@@ -99,7 +99,7 @@ const glassesController = {
                     {
                         model: Glasses_details,
                         as: 'details',
-                        attributes: ['lens_width', 'bridge_width', "temple_length", "lens_height", "total_width", "weight", "frame_material","lens_type"]
+                        attributes: ['lens_width', 'bridge_width', "temple_length", "lens_height", "total_width", "weight", "frame_material", "lens_type"]
                     }
                 ]
             });
@@ -109,14 +109,78 @@ const glassesController = {
         }
     },
 
-    getGlassesFilter: async (req, res) => {
-        const { category, targetAudience } = req.query; // Use req.query for query parameters
+    // getByCategoryAndType: async (req, res) => {
+    //     const { type, category } = req.query;
+    //     try {
+    //         const glasses = await Glasses.findAll({
+    //             where: {
+    //                 type: type,
+    //                 category: category
+    //             },
+    //             include: [
+    //                 {
+    //                     model: Brands,
+    //                     as: 'brand',
+    //                     attributes: ['brand_name', 'brand_image']
+    //                 },
+    //                 {
+    //                     model: Glasses_images,
+    //                     as: 'images',
+    //                     attributes: ['image_url', 'image_type']
+    //                 },
+    //                 {
+    //                     model: Glasses_details,
+    //                     as: 'details',
+    //                     attributes: ['lens_width', 'bridge_width', 'temple_length', 'lens_height', 'total_width', 'weight', 'frame_material', 'lens_type']
+    //                 }
+    //             ]
+    //         });
+    //         res.status(200).json(glasses);
+    //     } catch (error) {
+    //         res.status(500).json({ message: "Server error", error: error.message });
+    //     }
+    // },
+    // getByType: async (req, res) => {
+    //     const { type } = req.query;
+    //     try {
+    //         const glasses = await Glasses.findAll({
+    //             where: {
+    //                 type: type,
+    //             },
+    //             include: [
+    //                 {
+    //                     model: Brands,
+    //                     as: 'brand',
+    //                     attributes: ['brand_name', 'brand_image']
+    //                 },
+    //                 {
+    //                     model: Glasses_images,
+    //                     as: 'images',
+    //                     attributes: ['image_url', 'image_type']
+    //                 },
+    //                 {
+    //                     model: Glasses_details,
+    //                     as: 'details',
+    //                     attributes: ['lens_width', 'bridge_width', 'temple_length', 'lens_height', 'total_width', 'weight', 'frame_material', 'lens_type']
+    //                 }
+    //             ]
+    //         });
+    //         res.status(200).json(glasses);
+    //     } catch (error) {
+    //         res.status(500).json({ message: "Server error", error: error.message });
+    //     }
+    // },
+    getByCategoryAndTypeOrType: async (req, res) => {
+        const { type, category } = req.query;
         try {
+            let whereClause = {};
+
+            // Add conditions based on the presence of query parameters
+            if (type) whereClause.type = type;
+            if (category) whereClause.category = category;
+
             const glasses = await Glasses.findAll({
-                where: {
-                    category: category,
-                    target_audience: targetAudience // Ensure correct property names
-                },
+                where: whereClause,
                 include: [
                     {
                         model: Brands,
@@ -182,9 +246,9 @@ const glassesController = {
                 price,
                 discount_price,
                 discount_percentage,
-                target_audience,
                 category,
-                sub_category,
+                type,
+                sub_type,
                 stock_quantity,
                 has_virtual_try_on,
                 virtual_try_on_data,
@@ -208,21 +272,21 @@ const glassesController = {
                 });
             }
 
-            // Validate target_audience
+            // Validate category
             const validAudiences = ['men', 'women', 'unisex', 'kids'];
-            if (!validAudiences.includes(target_audience)) {
+            if (!validAudiences.includes(category)) {
                 return res.status(400).json({
                     error: 'Invalid target audience',
                     details: `Target audience must be one of: ${validAudiences.join(', ')}`
                 });
             }
 
-            // Validate category
+            // Validate type
             const validCategories = ['eyeglasses', 'sunglasses'];
-            if (!validCategories.includes(category)) {
+            if (!validCategories.includes(type)) {
                 return res.status(400).json({
-                    error: 'Invalid category',
-                    details: `Category must be one of: ${validCategories.join(', ')}`
+                    error: 'Invalid type',
+                    details: `type must be one of: ${validCategories.join(', ')}`
                 });
             }
 
@@ -233,9 +297,9 @@ const glassesController = {
                 price,
                 discount_price,
                 discount_percentage,
-                target_audience,
                 category,
-                sub_category,
+                type,
+                sub_type,
                 stock_quantity,
                 has_virtual_try_on,
                 virtual_try_on_data,
@@ -267,7 +331,7 @@ const glassesController = {
             // Delete the glasses
             await glasses.destroy();
             await glassesFromProducts.destroy();
-            
+
 
             res.status(200).json({ message: 'Glasses deleted successfully' });
         } catch (error) {

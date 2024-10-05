@@ -73,21 +73,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: true,
     },
-    target_audience: {
+    category: {
       type: DataTypes.STRING(10),
       allowNull: false,
       validate: {
         isIn: [['men', 'women', 'unisex', 'kids']]
       }
     },
-    category: {
+    type: {
       type: DataTypes.STRING(50),
       allowNull: false,
       validate: {
         isIn: [['eyeglasses', 'sunglasses']]
       }
     },
-    sub_category: {
+    sub_type: {
       type: DataTypes.STRING(50),
       allowNull: true
     },

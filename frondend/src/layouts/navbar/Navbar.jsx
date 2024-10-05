@@ -7,12 +7,12 @@ import LoginPopup from '../../pages/auth/LoginPopup';
 import SignUpPopup from '../../pages/auth/SignUpPopup';
 import { NavbarProvider } from './NavbarContext';  // Import the provider
 
- 
+
 
 const Navbar = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
-   const navigation = {
+    const navigation = {
         categories: [
             {
                 id: 'opticalFrames',
@@ -36,11 +36,11 @@ const Navbar = () => {
                         id: 'shop',
                         name: 'Shop',
                         items: [
-                            { name: 'All Opticals', to: '/glasses/optical' },
+                            { name: 'All Opticals', to: '/glasses/eyeglasses' },
                             { name: 'New Arrivals', to: '#' },
-                            { name: 'Opticals for Men', to: '/glasses/optical/men' },
-                            { name: 'Opticals for Women', to: '/glasses/optical/women' },
-                            { name: 'Opticals for Kids', to: '/glasses/optical/kids' },
+                            { name: 'Opticals for Men', to: '/glasses/eyeglasses/men' },
+                            { name: 'Opticals for Women', to: '/glasses/eyeglasses/women' },
+                            { name: 'Opticals for Kids', to: '/glasses/eyeglasses/kids' },
                             { name: 'Unisex', to: '#' },
                             { name: 'Best Selling', to: '#' },
                         ],
@@ -125,9 +125,9 @@ const Navbar = () => {
             },
         ],
         pages: [
-            { name: 'CONTACT LENSES', to: '#' },
-            { name: 'EYE EXAM', to: '#' },
-            { name: 'FRAME FINDER', to: '#' },
+            { name: 'CONTACT LENSES', to: '/contact-lens' },
+            { name: 'EYE EXAM', to: '/eye-exam' },
+            { name: 'FRAME FINDER', to: '/frame-finder' },
 
         ],
     }

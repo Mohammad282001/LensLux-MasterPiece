@@ -26,8 +26,8 @@ import { useContext } from 'react';
 import { NavbarContext } from './NavbarContext';
 
 
-const DesktopNavbar = ({ navigation }) => {
-    const { open, setOpen } = useContext(NavbarContext);
+const DesktopNavbar = ({ navigation, setOpen }) => {
+
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
 
@@ -70,9 +70,6 @@ const DesktopNavbar = ({ navigation }) => {
                     </button>
 
                     <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                    {/* <Link to="#" className="-m-2 block p-2 font-medium text-gray-200"> */}
-                    {/* Create account */}
-                    {/* </Link> */}
                     <button
                         onClick={() => dispatch(openSignUp())}
                         className="-m-2 block p-2 font-medium text-gray-200"
@@ -119,7 +116,7 @@ const DesktopNavbar = ({ navigation }) => {
                         <PopoverGroup className="hidden z-10 lg:ml-8 lg:block lg:self-stretch">
                             <div className="flex h-full space-x-8">
                                 {navigation.categories.map((category) => (
-                                    <Popover key={category.name} className="flex">
+                                    <Popover key={category.name} setOpen={setOpen} className="flex">
                                         <div className="relative flex">
                                             <PopoverButton className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-red-600 data-[open]:text-red-600">
                                                 {category.name}
