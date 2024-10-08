@@ -6,12 +6,15 @@ import ProductOverview from "./ProductOverview";
 import ProductSpecs from "./ProductSpecs";
 import SimilarProducts from "./SimilarProducts";
 import CustomerReviews from "./CustomerReviews";
+
 import FAQ from "./FAQ";
 
 const ProductDetails = () => {
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
 
     useEffect(() => {
         const fetchProductData = async () => {
@@ -19,11 +22,15 @@ const ProductDetails = () => {
                 const response = await fetch(
                     `http://localhost:3000/api/glasses/get/${productId}`
                 );
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();
                 setProduct(data);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching product data:", error);
+                setError("Failed to load product data. Please try again later.");
                 setLoading(false);
             }
         };
@@ -38,6 +45,14 @@ const ProductDetails = () => {
         return (
             <div className="flex justify-center items-center h-screen">
                 <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-black"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div className="text-xl text-red-600">{error}</div>
             </div>
         );
     }

@@ -3,11 +3,14 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronLeft, ShoppingCart } from 'lucide-react';
 import ProductOverview from "./ProductOverview";
+import { useCart } from 'react-use-cart';
+
 
 const ContactLensProductDetails = () => {
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { addItem, updateItemQuantity, getItem } = useCart();
 
     useEffect(() => {
         const fetchProductData = async () => {
@@ -65,7 +68,12 @@ const ContactLensProductDetails = () => {
                         <ChevronLeft size={16} className="mr-2" />
                         Back to Lenses
                     </Link>
-                    <ProductOverview product={product} />
+                    <ProductOverview
+                        product={product}
+                        addItem={addItem}
+                        updateItemQuantity={updateItemQuantity}
+                        getItem={getItem}
+                    />
                 </div>
             </motion.div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -92,17 +100,6 @@ const ContactLensProductDetails = () => {
                         </div>
                     </div>
                 </motion.div>
-
-                {/* <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
-                    className="bg-white shadow-lg rounded-lg p-8 mb-16"
-                >
-                    <h2 className="text-3xl font-light mb-6">Customer Reviews</h2>
-                    <p className="text-gray-600">No reviews yet. Be the first to review this product!</p>
-                </motion.div> */}
-
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -122,8 +119,8 @@ const ContactLensProductDetails = () => {
                     </div>
                 </motion.div>
             </div>
-{/* 
-            <motion.div
+
+            {/* <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.8 }}

@@ -4,7 +4,7 @@ module.exports = {
     // Add item to the order (cart)
     async addItemToOrder(req, res) {
         try {
-            const { order_id, product_id, quantity, price_per_item } = req.body;
+            const { order_id, product_id, quantity, price_per_item, details } = req.body;
 
             // Ensure required fields are present
             if (!order_id || !product_id || !quantity || !price_per_item) {
@@ -38,23 +38,24 @@ module.exports = {
                     order_id,
                     product_id,
                     quantity,
-                    price_per_item: parseFloat(price_per_item), // Ensure it's a float
+                    price_per_item: parseFloat(price_per_item),
+                    details
                 });
             }
 
             // Update the order's total price
-            const addedAmount = parseFloat(price_per_item) * quantity; // Ensure it's a float
+            const addedAmount = parseFloat(price_per_item) * quantity;
             order.total_amount = parseFloat(order.total_amount) + addedAmount; // Update total
-            console.log(`Updating total_amount by ${addedAmount}. New total: ${order.total_amount}`); // Log for debugging
+            console.log(`Updating total_amount by ${addedAmount}. New total: ${order.total_amount}`);
             await order.save();
 
-            return res.status(201).json(orderItem); // Send back the newly added item
+            return res.status(201).json(orderItem);
         } catch (error) {
             console.error('Failed to add item to order:', error);
             return res.status(500).json({ error: 'Failed to add item to order', details: error.message });
         }
     }
-,
+    ,
 
     // Remove item from the order (cart)
     async removeItemFromOrder(req, res) {

@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
     price_per_item: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false
+    },
+    details: {
+      type: DataTypes.STRING,
+      allowNull: true 
     }
   }, {
     sequelize,

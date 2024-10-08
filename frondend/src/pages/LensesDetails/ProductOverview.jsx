@@ -1,12 +1,12 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ShoppingCartIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const DiscountLabel = ({ discountPrice, discountPercentage }) => {
+const DiscountLabel = ({ discountPrice, discountPercentage, price }) => {
     if (!discountPrice && !discountPercentage) return null;
 
     const discountText = discountPrice
-        ? `${parseFloat(discountPrice).toFixed(2)} JOD OFF`
+        ? `${(parseFloat(price) - parseFloat(discountPrice)).toFixed(2)} JOD OFF`
         : `${discountPercentage}% OFF`;
 
     return (
@@ -22,11 +22,14 @@ const DiscountLabel = ({ discountPrice, discountPercentage }) => {
 
 const PriceDisplay = ({ price, discountPrice, discountPercentage }) => {
     const originalPrice = parseFloat(price || 0);
-    const discountedPrice = discountPrice
-        ? parseFloat(discountPrice)
-        : discountPercentage
-            ? (originalPrice * (1 - parseFloat(discountPercentage) / 100)).toFixed(2)
-            : null;
+    const discountedPrice = useMemo(() => {
+        if (discountPrice) {
+            return parseFloat(discountPrice);
+        } else if (discountPercentage) {
+            return (originalPrice * (1 - parseFloat(discountPercentage) / 100)).toFixed(2);
+        }
+        return null;
+    }, [originalPrice, discountPrice, discountPercentage]);
 
     return (
         <div className="text-2xl font-semibold mb-4">
@@ -44,19 +47,26 @@ const PriceDisplay = ({ price, discountPrice, discountPercentage }) => {
     );
 };
 
-const ProductOverview = ({ product }) => {
+const ProductOverview = ({ product, addItem, updateItemQuantity, getItem }) => {
     const [currentImage, setCurrentImage] = useState(0);
     const [quantity, setQuantity] = useState(1);
-
     const images = product.images && product.images.length > 0
         ? product.images.map((img) => img.image_url)
         : [product.brand?.brand_image || 'https://via.placeholder.com/400x400?text=No+Image'];
 
     const increaseQuantity = useCallback(() => setQuantity(prev => prev + 1), []);
     const decreaseQuantity = useCallback(() => setQuantity(prev => prev > 1 ? prev - 1 : 1), []);
-
     const isInStock = (product.quantity || 0) > 0;
     const StockQuantity = product.quantity || 0;
+
+    const discountedPrice = useMemo(() => {
+        if (product.discount_price) {
+            return parseFloat(product.discount_price);
+        } else if (product.discount_percentage) {
+            return (parseFloat(product.price) * (1 - parseFloat(product.discount_percentage) / 100)).toFixed(2);
+        }
+        return parseFloat(product.price);
+    }, [product.price, product.discount_price, product.discount_percentage]);
 
     const nextImage = () => {
         setCurrentImage((prev) => (prev + 1) % images.length);
@@ -64,6 +74,30 @@ const ProductOverview = ({ product }) => {
 
     const prevImage = () => {
         setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+    };
+
+    const handleAddToCart = () => {
+        const itemToAdd = {
+            id: product.id,
+            brand: product.brand.brand_name,
+            model: product.model,
+            price: discountedPrice,
+            quantity: quantity,
+            images: product.images,
+            description: product.description,
+            details: ""
+        };
+        const existingItem = getItem(product.glasses_id);
+        console.log(existingItem);
+        if (existingItem) {
+            const newQuantity = existingItem.quantity + quantity;
+            updateItemQuantity(product.glasses_id, newQuantity);
+        } else {
+            addItem(itemToAdd);
+        }
+
+        console.log("Added to cart:", itemToAdd);
+        setQuantity(1); 
     };
 
     return (
@@ -131,6 +165,7 @@ const ProductOverview = ({ product }) => {
                             className={`inline-flex items-center px-6 py-2 border border-black text-base font-medium transition-colors duration-300 ${isInStock ? "text-black hover:bg-black hover:text-white" : "bg-gray-400 cursor-not-allowed text-gray-700"
                                 }`}
                             disabled={!isInStock}
+                            onClick={handleAddToCart}
                         >
                             <ShoppingCartIcon size={20} className="mr-2" />
                             {isInStock ? "Add To Bag" : "Out of Stock"}
@@ -138,7 +173,7 @@ const ProductOverview = ({ product }) => {
                     </div>
 
                     <p className={`text-lg font-semibold mb-4 ${StockQuantity === 0 ? "text-red-500" : StockQuantity <= 5 ? "text-yellow-500" : "text-green-600"}`}>
-                        {StockQuantity == 0 ? "Out of Stock" : `${StockQuantity} Left in Stock`}
+                        {StockQuantity === 0 ? "Out of Stock" : `${StockQuantity} Left in Stock`}
                     </p>
                 </motion.div>
             </div>
@@ -152,6 +187,7 @@ const ProductOverview = ({ product }) => {
                     <DiscountLabel
                         discountPrice={product.discount_price}
                         discountPercentage={product.discount_percentage}
+                        price={product.price}
                     />
                     <img
                         src={images[currentImage]}

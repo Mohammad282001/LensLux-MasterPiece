@@ -1,11 +1,13 @@
-import React, { useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useCallback, useMemo } from "react";
 import TryOnBtn from "./TryOnBtn";
 import { ShoppingCartIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from "framer-motion";
+import { useCart } from "react-use-cart";
+import LensesSelectionPopup from "./PopupSelections/LensesSelectionPopup";
+
 
 const DiscountLabel = ({ discountPrice, discountPercentage }) => {
     if (!discountPrice && !discountPercentage) return null;
-
     const discountText = discountPrice
         ? `${parseFloat(discountPrice).toFixed(2)} JOD OFF`
         : `${discountPercentage}% OFF`;
@@ -23,11 +25,14 @@ const DiscountLabel = ({ discountPrice, discountPercentage }) => {
 
 const PriceDisplay = ({ price, discountPrice, discountPercentage }) => {
     const originalPrice = parseFloat(price);
-    const discountedPrice = discountPrice
-        ? parseFloat(discountPrice)
-        : discountPercentage
-            ? (originalPrice * (1 - parseFloat(discountPercentage) / 100)).toFixed(2)
-            : null;
+    const discountedPrice = useMemo(() => {
+        if (discountPrice) {
+            return parseFloat(discountPrice);
+        } else if (discountPercentage) {
+            return (originalPrice * (1 - parseFloat(discountPercentage) / 100)).toFixed(2);
+        }
+        return null;
+    }, [originalPrice, discountPrice, discountPercentage]);
 
     return (
         <div className="text-2xl font-semibold mb-4">
@@ -46,16 +51,71 @@ const PriceDisplay = ({ price, discountPrice, discountPercentage }) => {
 };
 
 const ProductOverview = ({ product }) => {
+
+
+
+
+
+
+
+
+
+
+
     const [currentImage, setCurrentImage] = useState(0);
     const [quantity, setQuantity] = useState(1);
-
+    const [isLensPopupOpen, setIsLensPopupOpen] = useState(false);
     const images = product.images.map((img) => img.image_url);
-
-    const increaseQuantity = useCallback(() => setQuantity(prev => prev + 1), []);
+    const increaseQuantity = useCallback(() => setQuantity(prev => prev < product.stock_quantity ? prev + 1 : prev), [product.stock_quantity]);
     const decreaseQuantity = useCallback(() => setQuantity(prev => prev > 1 ? prev - 1 : 1), []);
-
     const isInStock = product.stock_quantity > 0;
-    const StockQuantity = product.stock_quantity;
+    const stockQuantity = product.stock_quantity;
+    const { addItem, updateItemQuantity, getItem } = useCart();
+
+
+
+
+
+
+
+    const discountedPrice = useMemo(() => {
+        if (product.discount_price) {
+            return parseFloat(product.discount_price);
+        } else if (product.discount_percentage) {
+            return (parseFloat(product.price) * (1 - parseFloat(product.discount_percentage) / 100)).toFixed(2);
+        }
+        return parseFloat(product.price);
+    }, [product.price, product.discount_price, product.discount_percentage]);
+
+    const handleAddToCart = () => {
+        if (product.type === "eyeglasses") {
+            setIsLensPopupOpen(true);
+        } else {
+            const itemToAdd = {
+                id: product.glasses_id,
+                brand: product.brand.brand_name,
+                model: product.model,
+                price: discountedPrice,
+                quantity: quantity,
+                images: product.images,
+                description: product.description,
+                details: ""
+            };
+
+            const existingItem = getItem(product.glasses_id);
+            if (existingItem) {
+                const newQuantity = existingItem.quantity + quantity;
+                updateItemQuantity(product.glasses_id, newQuantity);
+            } else {
+                addItem(itemToAdd);
+            }
+
+            console.log("Added to cart:", itemToAdd);
+            setQuantity(1); // Reset quantity to 1 after adding to cart
+        }
+    };
+
+
 
     const nextImage = () => {
         setCurrentImage((prev) => (prev + 1) % images.length);
@@ -64,6 +124,9 @@ const ProductOverview = ({ product }) => {
     const prevImage = () => {
         setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
     };
+
+
+
 
     return (
         <div className="flex flex-col md:flex-row items-center justify-between gap-7 pb-10">
@@ -98,6 +161,10 @@ const ProductOverview = ({ product }) => {
                         {product.description}
                     </p>
                     <div className="flex items-center mb-6 space-x-4">
+                        {/* 
+
+
+
                         <div className="flex items-center border border-black">
                             <button
                                 onClick={decreaseQuantity}
@@ -114,8 +181,8 @@ const ProductOverview = ({ product }) => {
                                 aria-label="Quantity"
                             />
                             <button
-                                onClick={StockQuantity > quantity ? increaseQuantity : null}
-                                className={`inline-flex items-center px-4 py-2 text-base font-medium text-black ${StockQuantity > quantity
+                                onClick={stockQuantity > quantity ? increaseQuantity : null}
+                                className={`inline-flex items-center px-4 py-2 text-base font-medium text-black ${stockQuantity > quantity
                                     ? "hover:bg-black hover:text-white transition-colors duration-300"
                                     : "cursor-not-allowed"
                                     }`}
@@ -123,17 +190,46 @@ const ProductOverview = ({ product }) => {
                             >
                                 +
                             </button>
+                        </div> */}
+
+
+                        <div className="flex items-center border border-black">
+                            <button
+                                onClick={decreaseQuantity}
+                                className="inline-flex items-center px-4 py-2 text-base font-medium text-black hover:bg-black hover:text-white transition-colors duration-300"
+                                aria-label="Decrease quantity"
+                            >
+                                -
+                            </button>
+                            <input
+                                type="text"
+                                value={quantity}
+                                readOnly
+                                className="w-12 text-center bg-inherit"
+                                aria-label="Quantity"
+                            />
+                            <button
+                                onClick={increaseQuantity}
+                                className={`inline-flex items-center px-4 py-2 text-base font-medium text-black ${quantity < stockQuantity
+                                    ? "hover:bg-black hover:text-white transition-colors duration-300"
+                                    : "cursor-not-allowed"
+                                    }`}
+                                aria-label="Increase quantity"
+                                disabled={quantity >= stockQuantity}
+                            >
+                                +
+                            </button>
                         </div>
+
+
                         <div className="flex space-x-4">
                             <motion.button
                                 whileHover={{ scale: isInStock ? 1.05 : 1 }}
                                 whileTap={{ scale: isInStock ? 0.95 : 1 }}
                                 className={`inline-flex items-center px-6 py-2 border border-black text-base font-medium transition-colors duration-300 ${isInStock ? "text-black hover:bg-black hover:text-white" : "bg-gray-400 cursor-not-allowed text-gray-700"
                                     }`}
-                                
-                                // className={`inline-flex items-center px-6 py-2  bg-black border-white text-base font-medium transition-colors duration-300 ${isInStock ? "text-white hover:bg-gray boarder-black   hover:text-black" : "bg-gray-400 cursor-not-allowed text-gray-700"
-                                //     }`}
-                                // disabled={!isInStock}
+                                onClick={handleAddToCart}
+                                disabled={!isInStock}
                             >
                                 <ShoppingCartIcon size={20} className="mr-2" />
                                 {isInStock ? "Add To Bag" : "Out of Stock"}
@@ -142,8 +238,8 @@ const ProductOverview = ({ product }) => {
                         </div>
                     </div>
 
-                    <p className={`text-lg font-semibold mb-4 ${StockQuantity === 0 ? "text-red-500" : StockQuantity <= 5 ? "text-yellow-500" : "text-green-600"}`}>
-                        {StockQuantity === 0 ? "Out of Stock" : `${StockQuantity} Left in Stock`}
+                    <p className={`text-lg font-semibold mb-4 ${stockQuantity === 0 ? "text-red-500" : stockQuantity <= 5 ? "text-yellow-500" : "text-green-600"}`}>
+                        {stockQuantity === 0 ? "Out of Stock" : `${stockQuantity} Left in Stock`}
                     </p>
                 </motion.div>
             </div>
@@ -202,6 +298,12 @@ const ProductOverview = ({ product }) => {
                     </button>
                 </div>
             </motion.div>
+            <LensesSelectionPopup
+                isOpen={isLensPopupOpen}
+                onClose={() => setIsLensPopupOpen(false)}
+                product={product}
+                productPrice={discountedPrice}
+            />
         </div>
     );
 };

@@ -4,14 +4,16 @@ import App from './App.jsx'
 import './index.css'
 import { Provider } from 'react-redux';
 import { store } from './store.js';
-// import { NavbarProvider } from './layouts/navbar/NavbarContext'; // Adjust path as needed
-// import Navbar from './layouts/navbar/Navbar';
+import { CartProvider } from 'react-use-cart';
+
 
 createRoot(document.getElementById('root')).render(
 
   <StrictMode>
-    <Provider store={store}>
+    <CartProvider>
+      <Provider store={store}>
         <App />
-    </Provider>,
+      </Provider>,
+    </CartProvider>,
   </StrictMode>,
 )

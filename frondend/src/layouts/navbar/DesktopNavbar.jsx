@@ -15,6 +15,7 @@ import {
     TabPanels,
 } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useCart } from 'react-use-cart';
 
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,10 +24,10 @@ import LoginPopup from '../../pages/auth/LoginPopup';
 import SignUpPopup from '../../pages/auth/SignUpPopup';
 import logo from "../../assets/images/logo.png"
 import { useContext } from 'react';
-import { NavbarContext } from './NavbarContext';
 
 
 const DesktopNavbar = ({ navigation, setOpen }) => {
+    const { items, totalUniqueItems } = useCart();
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
@@ -200,16 +201,20 @@ const DesktopNavbar = ({ navigation, setOpen }) => {
                                 </Link>
                             </div>
                             {/* Cart */}
-                            <div className="ml-4 flow-root lg:ml-6">
-                                <Link to="#" className="group -m-2 flex items-center p-2">
+                            <div className="ml-4 flow-root lg:ml-6 relative">
+                                <Link to="/cart" className="group -m-2 flex items-center p-2">
                                     <ShoppingBagIcon
                                         aria-hidden="true"
                                         className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                     />
-                                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                    {/* Notification Badge */}
+                                    <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
+                                        {totalUniqueItems}
+                                    </span>
                                     <span className="sr-only">items in cart, view bag</span>
                                 </Link>
                             </div>
+
                         </div>
                     </div>
                 </div>
