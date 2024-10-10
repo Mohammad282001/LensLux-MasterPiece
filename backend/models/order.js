@@ -31,8 +31,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(20),
       allowNull: false,
       defaultValue: 'pending',
-      validate: {
-        isIn: [['pending', 'processing', 'shipping', 'delivered', 'cancelled']]
+      isIn: {
+        args: [['pending', 'shipped', 'delivered', 'cancelled', 'paid']], // Add 'paid' here
+        msg: 'Invalid order status'
       }
     },
     shipping_address: {

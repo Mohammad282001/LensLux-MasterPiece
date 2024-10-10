@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from 'react-use-cart';
+import axios from 'axios';
 import CartContent from './CartContent';
 import DeliveryForm from './DeliveryForm';
 import CheckoutForm from './CheckoutForm';
@@ -11,22 +12,86 @@ import ProgressBar from './ProgressBar';
 import Navbar from '../../layouts/navbar/Navbar';
 import Footer from '../../layouts/footer';
 import { ChevronLeftIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
 
 const stripePromise = loadStripe('pk_test_51PeAmLGFMsHudRVCgSW72go7mjfilxpPFDqgl4N6RfOhbqYWnjyIL5cXJqkYfxSbjwY7YYtmBk8Zgb5qW70Fl9xZ00HSRj1lea');
+
 
 const CartCheckoutFlow = () => {
     const [step, setStep] = useState(1);
     const [deliveryInfo, setDeliveryInfo] = useState({});
-    const { cartTotal, emptyCart } = useCart();
+    const [orderId, setOrderId] = useState(null);
+    const { cartTotal, emptyCart, items } = useCart();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
+
+    const checkAuth = useCallback(async () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            try {
+                await axios.get('http://localhost:3000/api/users/userProfile', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setIsAuthenticated(true);
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                setIsAuthenticated(false);
+                localStorage.removeItem('token');
+            }
+        } else {
+            setIsAuthenticated(false);
+        }
+        setIsLoading(false);
+    }, []);
+
+    useEffect(() => {
+        checkAuth();
+    }, [checkAuth]);
+
+    useEffect(() => {
+        const createOrder = async () => {
+            if (items.length > 0 && isAuthenticated && !orderId) {
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await axios.post('http://localhost:3000/api/orders/cart', {}, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    setOrderId(response.data.id);
+                } catch (error) {
+                    console.error('Failed to create order:', error);
+                }
+            }
+        };
+
+        createOrder();
+    }, [items, isAuthenticated, orderId]);
 
     const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);
 
-    const handleOrderCompletion = () => {
-        // Here you would typically send the order to your backend
-        // For this example, we'll just empty the cart
-        // emptyCart();
-        nextStep();
+    const handleOrderCompletion = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            await axios.post('http://localhost:3000/api/orders/checkout', {
+                order_id: orderId,
+                shipping_address: deliveryInfo,
+                total_amount: cartTotal,
+                items: items.map(item => ({
+                    product_id: item.id,
+                    quantity: item.quantity,
+                    price_per_item: item.price,
+                    details: item.details
+                }))
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            emptyCart();
+            nextStep();
+        } catch (error) {
+            console.error('Failed to complete order:', error);
+        }
     };
 
     const renderBackButton = () => {
@@ -51,15 +116,26 @@ const CartCheckoutFlow = () => {
             case 1:
                 return <CartContent nextStep={nextStep} />;
             case 2:
+                if (isLoading) {
+                    return <div>Loading...</div>;
+                }
+                if (!isAuthenticated) {
+                    navigate('/login', { state: { returnTo: '/cart' } });
+                    return null;
+                }
                 return <DeliveryForm nextStep={nextStep} setDeliveryInfo={setDeliveryInfo} />;
             case 3:
-                return <CheckoutForm cartTotal={cartTotal} nextStep={handleOrderCompletion} />;
+                return <CheckoutForm cartTotal={cartTotal} nextStep={handleOrderCompletion} orderId={orderId} />;
             case 4:
                 return <OrderConfirmation deliveryInfo={deliveryInfo} />;
             default:
                 return null;
         }
     };
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Elements stripe={stripePromise}>

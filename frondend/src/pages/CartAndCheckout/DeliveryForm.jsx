@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRightIcon } from 'lucide-react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const DeliveryForm = ({ nextStep, setDeliveryInfo }) => {
     const [formData, setFormData] = useState({
@@ -11,6 +13,38 @@ const DeliveryForm = ({ nextStep, setDeliveryInfo }) => {
         postalCode: '',
         phone: ''
     });
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                setError('You must be logged in to proceed.');
+                setIsLoading(false);
+                return;
+            }
+            try {
+                const response = await axios.get('http://localhost:3000/api/users/userProfile', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const userData = response.data.data.user;
+                setFormData(prevData => ({
+                    ...prevData,
+                    fullName: `${userData.first_name} ${userData.last_name}`,
+                    phone: userData.phone_number || ''
+                }));
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Failed to fetch user data:', error);
+                setError('Failed to load user data. Please try again.');
+                setIsLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,6 +55,24 @@ const DeliveryForm = ({ nextStep, setDeliveryInfo }) => {
         setDeliveryInfo(formData);
         nextStep();
     };
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return (
+            <div className="text-center">
+                <p className="text-red-500">{error}</p>
+                <button
+                    onClick={() => navigate('/login', { state: { returnTo: '/cart' } })}
+                    className="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
+                >
+                    Go to Login
+                </button>
+            </div>
+        );
+    }
 
     return (
         <motion.form
