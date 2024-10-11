@@ -25,7 +25,6 @@ const ChangePasswordTab = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Implement password change logic here
         console.log('Changing password:', passwords);
     };
 
